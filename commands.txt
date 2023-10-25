@@ -1,0 +1,43 @@
+# to create pod
+kubectl create -f pod.yaml
+# 
+kubectl apply -f pod.yaml
+# apply is decorative, it will check if it is already created and compare what is existing and what is being applied. new changes
+# will be applied. Create is imperative and will just attempt to create, if there is something existing, it will fail.
+
+kubectl get pod -n myns
+kubectl get pod -n myns <pod name>, eg. kubectl get pod -n myns dov-po   
+
+# specific pod (po is shortcut for pod)
+kubectl describe -n myns pod/dov-po
+kubectl describe -n myns po/dov-po
+# all the pods
+kubectl describe -n myns po
+
+# get status of all pods
+kubectl get all -n myns
+kubectl get all -n myns -owide
+
+# port forwarding
+kubectl port-forward -nmyns po/dov-po 8080:3000
+kubectl port-forward -nmyns deploy/dov-deploy 8080:3000 
+kubectl port-forward -n myns svc/dov-svc 5000:8080
+
+kubectl delete -n myns po/dov-po
+# delete the resource immediately (means delete the content from this file NOT delete the file)
+kubectl delete -f pod.yaml --force --grace-period=0
+
+# to change scale without touching yaml (manually)
+kubectl scale -n myns deploy/dov-deploy --replicas=3
+
+# see logs
+kubectl
+
+# check services
+kubectl describe -n myns svc/dov-svc
+
+#
+kubectl run shoot -ti --rm --image=nicolaka/netshoot -- /bin/bash
+
+#
+kubectl get no -owide
