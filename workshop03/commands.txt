@@ -1,0 +1,5 @@
+# get metrics
+kubectl top no
+
+# get metrics for all pods across all namespaces sorted by memory
+kubectl top po -A --sort-by=memory
