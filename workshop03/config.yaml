@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: codeserver-ns
+  labels:
+    app: codeserver
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: codeserver-cm
+  namespace: codeserver-ns
+  labels:
+    app: codeserver
+data:
+  TZ: Asia/Singapore
+  password: password
+  SUDO_PASSWORD: password
+  DEFAULT_WORKSPACE: /config/workspace
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: codeserver-ing
+  namespace: codeserver-ns
+  labels:
+    app: codeserver
+    name: codeserver-ing
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: codeserver-188.166.206.38.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: codeserver-svc
+            port:
+              number: 8443

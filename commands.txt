@@ -14,8 +14,10 @@ kubectl describe -n myns po/dov-po
 # all the pods
 kubectl describe -n myns po
 
-# get status of all pods
+# get status of all pods in the namespace
+kubectl get all -n <namespace>
 kubectl get all -n myns
+kubectl get all -n ingress-nginx
 kubectl get all -n myns -owide
 
 # port forwarding
@@ -41,3 +43,9 @@ kubectl run shoot -ti --rm --image=nicolaka/netshoot -- /bin/bash
 
 #
 kubectl get no -owide
+
+# get ip of load balancer
+kubectl get svc -n <service name> 
+
+# get ingress class
+kubectl get ingressclass
